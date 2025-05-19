@@ -19,7 +19,7 @@ class ContactFactory extends Factory
         return [
             'last_name'    => fake()->lastName(),
             'first_name'   => fake()->firstName(),
-            'phone_number' => fake()->unique()->phoneNumber(),
+            'phone_number' => '+2376'. ['5', '7', '9'][random_int(0, 2)] . str_pad("".random_int(0, 9999999), 7, '0', STR_PAD_LEFT),
         ];
     }
 }
