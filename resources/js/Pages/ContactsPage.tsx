@@ -5,6 +5,7 @@ import { Contact, PageProps } from '../types';
 import { Upload, X } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import { usePage } from '@inertiajs/react';
+import axios from 'axios';
 
 const ContactsPage: React.FC = () => {
     const { contacts: contactsProp } = usePage<PageProps<{ contacts: Contact[] }>>().props;
@@ -14,24 +15,20 @@ const ContactsPage: React.FC = () => {
     const [editingContact, setEditingContact] = useState<Contact | undefined>(undefined);
     const [showImportModal, setShowImportModal] = useState(false);
 
-    const handleAddContact = (contactData: Omit<Contact, 'id' | 'created_at'>) => {
-        const newContact: Contact = {
-            id: Date.now().toString(),
-            created_at: new Date().toISOString(),
-            ...contactData,
-        };
+    const handleAddContact = async (contactData: Omit<Contact, 'id' | 'created_at'>) => {
+        const newContact: Contact = await axios.post('/contacts', contactData).then(response => response.data);
 
         setContacts([...contacts, newContact]);
         setShowAddForm(false);
     };
 
-    const handleEditContact = (contactData: Omit<Contact, 'id' | 'created_at'>) => {
-        if (!editingContact) return;
+    const handleEditContact = async (contactData: Omit<Contact, 'id' | 'created_at'>) => {
+        const updatedContact = await axios.put(`/contacts/${editingContact.id}`, contactData).then(response => response.data);
 
-        const updatedContacts = contacts.map(contact =>
-            contact.id === editingContact.id
-                ? { ...contact, ...contactData }
-                : contact
+
+        // Update local state
+        const updatedContacts = contacts.map((contact) =>
+            contact.id === updatedContact.id ? updatedContact : contact
         );
 
         setContacts(updatedContacts);

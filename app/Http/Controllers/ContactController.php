@@ -41,7 +41,15 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'last_name'    => 'required|string|max:255',
+            'first_name'   => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20|phone_number'
+        ]);
+
+        $contact = Contact::create($validated);
+
+        return response()->json($contact);
     }
 
     /**
@@ -65,7 +73,22 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
+        $validated = $request->validate([
+            'last_name'    => 'required|string|max:255',
+            'first_name'   => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20|phone_number'
+        ]);
+
+        $contact->update($validated);
+
+        return response()->json([
+            'id'           => (string)$contact->id,
+            'last_name'    => $contact->last_name,
+            'first_name'   => $contact->first_name,
+            'phone_number' => $contact->phone_number,
+            'created_at'   => $contact->created_at->toDateTimeString(),
+            'updated_at'   => $contact->updated_at->toDateTimeString(),
+        ]);
     }
 
     /**
