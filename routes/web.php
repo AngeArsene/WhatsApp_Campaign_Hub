@@ -6,7 +6,7 @@ use App\Http\Controllers\ContactController;
 
 Route::get('/', fn () => Inertia::render('DashboardPage'));
 
-Route::resource('contacts', ContactController::class)->only(['index', 'store', 'update']);
+Route::resource('contacts', ContactController::class)->only(['index', 'store', 'update', 'destroy']);
 
 Route::get('/campaigns', fn () => Inertia::render('CampaignsPage'));
 Route::get('/schedule', fn () => Inertia::render('SchedulePage'));

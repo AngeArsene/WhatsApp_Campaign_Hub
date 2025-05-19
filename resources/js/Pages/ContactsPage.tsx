@@ -16,15 +16,16 @@ const ContactsPage: React.FC = () => {
     const [showImportModal, setShowImportModal] = useState(false);
 
     const handleAddContact = async (contactData: Omit<Contact, 'id' | 'created_at'>) => {
-        const newContact: Contact = await axios.post('/contacts', contactData).then(response => response.data);
+        const newContact: Contact = await axios.post('/contacts', contactData)
+            .then(response => response.data);
 
         setContacts([...contacts, newContact]);
         setShowAddForm(false);
     };
 
     const handleEditContact = async (contactData: Omit<Contact, 'id' | 'created_at'>) => {
-        const updatedContact = await axios.put(`/contacts/${editingContact.id}`, contactData).then(response => response.data);
-
+        const updatedContact = await axios.put(`/contacts/${editingContact.id}`, contactData)
+            .then(response => response.data);
 
         // Update local state
         const updatedContacts = contacts.map((contact) =>
@@ -35,7 +36,11 @@ const ContactsPage: React.FC = () => {
         setEditingContact(undefined);
     };
 
-    const handleDeleteContact = (id: string) => {
+    const handleDeleteContact = async (id: string) => {
+        if (!confirm('Are you sure you want to delete this contact?')) return;
+
+        axios.delete(`/contacts/${id}`);
+
         setContacts(contacts.filter(contact => contact.id !== id));
     };
 
