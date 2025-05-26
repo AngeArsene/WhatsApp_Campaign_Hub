@@ -77,7 +77,7 @@ class ContactController extends Controller
      * Formats a Contact model instance into an associative array.
      *
      * @param Contact $contact The contact instance to format.
-     * @return array<string, string|null> The formatted contact data.
+     * @return array<string,string|null> The formatted contact data.
      */
     private static function formate(Contact $contact): array
     {
