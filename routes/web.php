@@ -1,8 +1,8 @@
 <?php
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', fn () => Inertia::render('DashboardPage'));
 Route::get('/reports', fn () => Inertia::render('ReportsPage'));
