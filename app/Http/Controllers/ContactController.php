@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Contact;
-use Illuminate\Http\Request;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
@@ -13,19 +13,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-
-        return Inertia::render('ContactsPage', [
-            'contacts' => Contact::all()->map(function ($contact) {
-                return [
-                    'id'           => (string)$contact->id,
-                    'last_name'    => $contact->last_name,
-                    'first_name'   => $contact->first_name,
-                    'phone_number' => $contact->phone_number,
-                    'created_at'   => $contact->created_at->toDateTimeString(),
-                    'updated_at'   => $contact->updated_at->toDateTimeString(),
-                ];
-            }),
-        ]);
+        return Inertia::render(
+            'ContactsPage',
+            ['contacts' => Contact::all()->map(fn ($contact) => self::formate($contact))]
+        );
     }
 
     /**
@@ -39,17 +30,11 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        $validated = $request->validate([
-            'last_name'    => 'required|string|max:255',
-            'first_name'   => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20|phone_number'
-        ]);
+        $contact = Contact::create($request->validated());
 
-        $contact = Contact::create($validated);
-
-        return response()->json($contact);
+        return response()->json(self::formate($contact));
     }
 
     /**
@@ -71,24 +56,11 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contact $contact)
+    public function update(ContactRequest $request, Contact $contact)
     {
-        $validated = $request->validate([
-            'last_name'    => 'required|string|max:255',
-            'first_name'   => 'required|string|max:255',
-            'phone_number' => 'required|string|max:20|phone_number'
-        ]);
+        $contact->update($request->validated());
 
-        $contact->update($validated);
-
-        return response()->json([
-            'id'           => (string)$contact->id,
-            'last_name'    => $contact->last_name,
-            'first_name'   => $contact->first_name,
-            'phone_number' => $contact->phone_number,
-            'created_at'   => $contact->created_at->toDateTimeString(),
-            'updated_at'   => $contact->updated_at->toDateTimeString(),
-        ]);
+        return response()->json(self::formate($contact));
     }
 
     /**
@@ -97,5 +69,23 @@ class ContactController extends Controller
     public function destroy(Contact $contact)
     {
         $contact->delete();
+    }
+
+    /**
+     * Formats a Contact model instance into an associative array.
+     *
+     * @param Contact $contact The contact instance to format.
+     * @return array The formatted contact data.
+     */
+    private static function formate(Contact $contact): array
+    {
+        return [
+            'id'           => (string)$contact->id,
+            'last_name'    => $contact->last_name,
+            'first_name'   => $contact->first_name,
+            'phone_number' => $contact->phone_number,
+            'created_at'   => $contact->created_at->toDateTimeString(),
+            'updated_at'   => $contact->updated_at->toDateTimeString(),
+        ];
     }
 }

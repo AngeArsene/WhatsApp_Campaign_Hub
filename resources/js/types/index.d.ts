@@ -24,6 +24,8 @@ export interface Contact {
   updated_at: string;
 }
 
+export type StrippedContact = Omit<Contact, 'id' | 'created_at' | 'updated_at'>;
+
 export interface Campaign {
   id: string;
   name: string;

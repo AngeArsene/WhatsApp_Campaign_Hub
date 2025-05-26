@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Contact } from '../../types';
+import { Contact, SimpleContact } from '../../types';
 
 interface ContactFormProps {
   contact?: Contact;
-  onSave: (contact: Omit<Contact, 'id' | 'created_at'>) => void;
+  onSave: (contact: SimpleContact) => void;
   onCancel: () => void;
 }
 

@@ -10,13 +10,7 @@ interface ContactsListProps {
   onDelete: (id: string) => void;
 }
 
-const ContactsList: React.FC<ContactsListProps> = ({
-  contacts,
-  onAdd,
-  onImport,
-  onEdit,
-  onDelete
-}) => {
+const ContactsList: React.FC<ContactsListProps> = ({ contacts, onAdd, onImport, onEdit, onDelete }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
 
