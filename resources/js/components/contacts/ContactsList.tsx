@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Contact } from '../../types';
 import { Search, Upload, Download, Plus, Edit, Trash2 } from 'lucide-react';
+import { Contact } from '@/types';
 
 interface ContactsListProps {
   contacts: Contact[];
   onAdd: () => void;
   onImport: () => void;
   onEdit: (contact: Contact) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
 }
 
 const ContactsList: React.FC<ContactsListProps> = ({ contacts, onAdd, onImport, onEdit, onDelete }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
+  const [selectedContacts, setSelectedContacts] = useState<number[]>([]);
 
   const filteredContacts = contacts.filter(contact => {
     const fullName = `${contact.first_name} ${contact.last_name}`.toLowerCase();
@@ -28,7 +28,7 @@ const ContactsList: React.FC<ContactsListProps> = ({ contacts, onAdd, onImport, 
     }
   };
 
-  const handleSelectContact = (id: string) => {
+  const handleSelectContact = (id: number) => {
     if (selectedContacts.includes(id)) {
       setSelectedContacts(selectedContacts.filter(contactId => contactId !== id));
     } else {

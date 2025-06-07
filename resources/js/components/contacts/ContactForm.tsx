@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Contact, SimpleContact } from '../../types';
+import { Contact, StrippedContact } from '../../types';
 
 interface ContactFormProps {
   contact?: Contact;
-  onSave: (contact: SimpleContact) => void;
+  onSave: (contact: StrippedContact) => Promise<void>;
   onCancel: () => void;
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<StrippedContact>({
     first_name: '',
     last_name: '',
     phone_number: ''
   });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) 
     }
   };
 
-  const validateForm = () => {
+  const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.first_name.trim()) {
@@ -58,9 +59,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      onSave(formData);
-    }
+    validateForm() && onSave(formData);
   };
 
   return (
