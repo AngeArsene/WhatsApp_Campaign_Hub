@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ContactRequest;
-use App\Models\Contact;
-use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Contact;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return \Inertia\Response
      */
     public function index(): Response
     {
