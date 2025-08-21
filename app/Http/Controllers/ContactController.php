@@ -19,7 +19,7 @@ class ContactController extends Controller
     {
         return Inertia::render(
             'ContactsPage',
-            ['contacts' => Contact::all()->map(fn ($contact) => self::formate($contact))]
+            ['contacts' => Contact::all()->map(fn ($contact) => Contact::formate($contact))]
         );
     }
 
@@ -38,7 +38,7 @@ class ContactController extends Controller
     {
         $contact = Contact::create($request->validated());
 
-        return response()->json(self::formate($contact));
+        return response()->json(Contact::formate($contact));
     }
 
     /**
@@ -64,7 +64,7 @@ class ContactController extends Controller
     {
         $contact->update($request->validated());
 
-        return response()->json(self::formate($contact));
+        return response()->json(Contact::formate($contact));
     }
 
     /**
@@ -73,23 +73,5 @@ class ContactController extends Controller
     public function destroy(Contact $contact): void
     {
         $contact->delete();
-    }
-
-    /**
-     * Formats a Contact model instance into an associative array.
-     *
-     * @param  Contact  $contact  The contact instance to format.
-     * @return array<string,string|int|null> The formatted contact data.
-     */
-    private static function formate(Contact $contact): array
-    {
-        return [
-            'id'           => $contact->id,
-            'first_name'   => $contact->first_name,
-            'last_name'    => $contact->last_name,
-            'phone_number' => $contact->phone_number,
-            'created_at'   => $contact->created_at?->toDateTimeString(),
-            'updated_at'   => $contact->updated_at?->toDateTimeString(),
-        ];
     }
 }
