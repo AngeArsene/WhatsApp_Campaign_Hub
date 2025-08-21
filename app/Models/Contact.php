@@ -14,18 +14,27 @@ class Contact extends Model
     /**
      * Formats a Contact model instance into an associative array.
      *
-     * @param  Contact  $contact  The contact instance to format.
      * @return array<string,string|int|null> The formatted contact data.
      */
-    public static function formate(Contact $contact): array
+    private function formate(): array
     {
         return [
-            'id'           => $contact->id,
-            'first_name'   => $contact->first_name,
-            'last_name'    => $contact->last_name,
-            'phone_number' => $contact->phone_number,
-            'created_at'   => $contact->created_at?->toDateTimeString(),
-            'updated_at'   => $contact->updated_at?->toDateTimeString(),
+            'id'           => $this->id,
+            'first_name'   => $this->first_name,
+            'last_name'    => $this->last_name,
+            'phone_number' => $this->phone_number,
+            'created_at'   => $this->created_at?->toDateTimeString(),
+            'updated_at'   => $this->updated_at?->toDateTimeString(),
         ];
+    }
+
+    /**
+     * Convert the model instance to an array using the custom format.
+     *
+     * @return array The formatted array representation of the model.
+     */
+    public function toArray(): array
+    {
+        return $this->formate();
     }
 }

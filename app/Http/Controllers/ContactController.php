@@ -19,7 +19,7 @@ class ContactController extends Controller
     {
         return Inertia::render(
             'ContactsPage',
-            ['contacts' => Contact::all()->map(fn ($contact) => Contact::formate($contact))]
+            ['contacts' => Contact::all()->toArray()]
         );
     }
 
@@ -38,7 +38,7 @@ class ContactController extends Controller
     {
         $contact = Contact::create($request->validated());
 
-        return response()->json(Contact::formate($contact));
+        return response()->json($contact->toArray());
     }
 
     /**
@@ -64,7 +64,7 @@ class ContactController extends Controller
     {
         $contact->update($request->validated());
 
-        return response()->json(Contact::formate($contact));
+        return response()->json($contact->toArray());
     }
 
     /**
