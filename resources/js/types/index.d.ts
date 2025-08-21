@@ -16,7 +16,7 @@ export type PageProps<
 // Define our core types for the application
 
 export interface Contact {
-  id: string;
+  id: number;
   first_name: string;
   last_name: string;
   phone_number: string;

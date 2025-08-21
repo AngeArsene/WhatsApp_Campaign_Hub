@@ -3,39 +3,44 @@ import { Campaign, CampaignReport, Contact, ScheduledReport } from '../types';
 // Mock data for development
 export const mockContacts: Contact[] = [
   {
-    id: '1',
+    id: 1,
     first_name: 'John',
     last_name: 'Doe',
     phone_number: '+1234567890',
     created_at: '2025-01-01T10:00:00Z',
+    updated_at: '2025-01-01T10:00:00Z'
   },
   {
-    id: '2',
+    id: 2,
     first_name: 'Jane',
     last_name: 'Smith',
     phone_number: '+1987654321',
     created_at: '2025-01-02T11:30:00Z',
+    updated_at: '2025-01-02T11:30:00Z'
   },
   {
-    id: '3',
+    id: 3,
     first_name: 'Michael',
     last_name: 'Johnson',
     phone_number: '+1122334455',
     created_at: '2025-01-03T09:15:00Z',
+    updated_at: '2025-01-03T09:15:00Z'
   },
   {
-    id: '4',
+    id: 4,
     first_name: 'Sarah',
     last_name: 'Williams',
     phone_number: '+1555666777',
     created_at: '2025-01-04T14:45:00Z',
+    updated_at: '2025-01-04T14:45:00Z'
   },
   {
-    id: '5',
+    id: 5,
     first_name: 'David',
     last_name: 'Brown',
     phone_number: '+1999888777',
     created_at: '2025-01-05T16:20:00Z',
+    updated_at: '2025-01-05T16:20:00Z'
   }
 ];
 

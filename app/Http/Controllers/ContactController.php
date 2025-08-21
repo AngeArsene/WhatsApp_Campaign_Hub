@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ContactRequest;
-use App\Models\Contact;
-use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Contact;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return \Inertia\Response
      */
     public function index(): Response
     {
@@ -77,17 +79,17 @@ class ContactController extends Controller
      * Formats a Contact model instance into an associative array.
      *
      * @param  Contact  $contact  The contact instance to format.
-     * @return array<string,string|null> The formatted contact data.
+     * @return array<string,string|int|null> The formatted contact data.
      */
     private static function formate(Contact $contact): array
     {
         return [
-            'id' => (string) $contact->id,
-            'last_name' => $contact->last_name,
-            'first_name' => $contact->first_name,
+            'id'           => $contact->id,
+            'first_name'   => $contact->first_name,
+            'last_name'    => $contact->last_name,
             'phone_number' => $contact->phone_number,
-            'created_at' => $contact->created_at?->toDateTimeString(),
-            'updated_at' => $contact->updated_at?->toDateTimeString(),
+            'created_at'   => $contact->created_at?->toDateTimeString(),
+            'updated_at'   => $contact->updated_at?->toDateTimeString(),
         ];
     }
 }

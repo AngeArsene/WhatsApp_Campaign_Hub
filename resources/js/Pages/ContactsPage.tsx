@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import ContactsList from '../components/contacts/ContactsList';
 import ContactForm from '../components/contacts/ContactForm';
-import { Contact, PageProps } from '../types';
+import { Contact, StrippedContact } from '../types';
 import { Upload, X } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import { usePage } from '@inertiajs/react';
 import axios from 'axios';
 
-const ContactsPage: React.FC = () => {
-    const { contacts: contactsProp } = usePage<PageProps<{ contacts: Contact[] }>>().props;
+const ContactsPage: React.FC<{ contacts: Contact[] }> = ({ contacts: contactsProp }) => {
 
     const [contacts, setContacts] = useState<Contact[]>(contactsProp);
     const [showAddForm, setShowAddForm] = useState(false);
     const [editingContact, setEditingContact] = useState<Contact | undefined>(undefined);
     const [showImportModal, setShowImportModal] = useState(false);
 
-    const handleAddContact = async (contactData: Omit<Contact, 'id' | 'created_at' | 'updated_at'>) => {
+    const handleAddContact = async (contactData: StrippedContact): Promise<void> => {
         const newContact: Contact = await axios.post('/contacts', contactData)
-            .then(response => response.data);
+            .then(response => response.data as Contact);
 
         setContacts([...contacts, newContact]);
         setShowAddForm(false);
     };
 
-    const handleEditContact = async (contactData: Omit<Contact, 'id' | 'created_at' | 'updated_at'>) => {
+    const handleEditContact = async (contactData: StrippedContact): Promise<void> => {
         if (editingContact) {
             const updatedContact: Contact = await axios.put(`/contacts/${editingContact.id}`, contactData)
-                .then(response => response.data);
+                .then(response => response.data as Contact);
 
             // Update local state
             const updatedContacts = contacts.map((contact) =>
@@ -38,10 +37,10 @@ const ContactsPage: React.FC = () => {
         }
     };
 
-    const handleDeleteContact = async (id: string) => {
+    const handleDeleteContact = async (id: number): Promise<void> => {
         if (!confirm('Are you sure you want to delete this contact?')) return;
 
-        axios.delete(`/contacts/${id}`);
+        await axios.delete(`/contacts/${id}`);
 
         setContacts(contacts.filter(contact => contact.id !== id));
     };
