@@ -10,4 +10,4 @@ Route::get('/settings', fn () => Inertia::render('SettingsPage'));
 Route::get('/schedule', fn () => Inertia::render('SchedulePage'));
 Route::get('/campaigns', fn () => Inertia::render('CampaignsPage'));
 
-Route::apiResource('contacts', ContactController::class);
+Route::apiResource('contacts', ContactController::class)->except('show');
