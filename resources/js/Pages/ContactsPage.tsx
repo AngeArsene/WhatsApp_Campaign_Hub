@@ -3,7 +3,7 @@ import ContactsList from '../components/contacts/ContactsList';
 import ContactForm from '../components/contacts/ContactForm';
 import { Contact, StrippedContact } from '../types';
 import { Upload, X } from 'lucide-react';
-import Layout from '@/components/layout/Layout';
+import Layout from '@/Layouts/Main/Layout';
 import { usePage } from '@inertiajs/react';
 import axios from 'axios';
 

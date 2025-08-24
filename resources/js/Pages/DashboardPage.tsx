@@ -4,7 +4,7 @@ import { Users, MessageSquare, BarChart3, Calendar } from 'lucide-react';
 import StatCard from '../components/dashboard/StatCard';
 import CampaignOverview from '../components/dashboard/CampaignOverview';
 import { mockCampaigns, mockContacts } from '../data/mockData';
-import Layout from '@/components/layout/Layout';
+import Layout from '@/Layouts/Main/Layout';
 
 const DashboardPage: React.FC = () => {
     //   const navigate = useNavigate();

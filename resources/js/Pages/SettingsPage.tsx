@@ -11,7 +11,7 @@ import {
     Instagram,
     ChevronRight
 } from 'lucide-react';
-import Layout from '@/components/layout/Layout';
+import Layout from '@/Layouts/Main/Layout';
 
 const SettingsPage: React.FC = () => {
     const [activeTab, setActiveTab] = useState('profile');

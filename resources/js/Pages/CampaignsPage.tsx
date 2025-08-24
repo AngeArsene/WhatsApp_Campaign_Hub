@@ -3,7 +3,7 @@ import CampaignsList from '../components/campaigns/CampaignsList';
 import CampaignForm from '../components/campaigns/CampaignForm';
 import { mockCampaigns } from '../data/mockData';
 import { Campaign } from '../types';
-import Layout from '@/components/layout/Layout';
+import Layout from '@/Layouts/Main/Layout';
 
 const CampaignsPage: React.FC = () => {
     const [campaigns, setCampaigns] = useState<Campaign[]>(mockCampaigns);

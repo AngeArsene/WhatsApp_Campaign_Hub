@@ -3,7 +3,7 @@ import { mockReports, mockCampaigns } from '../data/mockData';
 import ReportCard from '../components/reports/ReportCard';
 import { Calendar, Plus, Send } from 'lucide-react';
 import { CampaignReport } from '../types';
-import Layout from '@/components/layout/Layout';
+import Layout from '@/Layouts/Main/Layout';
 
 const ReportsPage: React.FC = () => {
     const handleSendReport = (report: CampaignReport) => {

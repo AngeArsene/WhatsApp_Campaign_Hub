@@ -4,7 +4,7 @@ import { Calendar, Clock, Plus, Trash2, Edit } from 'lucide-react';
 import { ScheduledReport, Campaign } from '../types';
 import CampaignScheduleForm from '../components/schedule/CampaignScheduleForm';
 import AutomatedReportForm from '../components/schedule/AutomatedReportForm';
-import Layout from '@/components/layout/Layout';
+import Layout from '@/Layouts/Main/Layout';
 
 const SchedulePage: React.FC = () => {
     const [scheduledReports, setScheduledReports] = useState<ScheduledReport[]>(mockScheduledReports);
