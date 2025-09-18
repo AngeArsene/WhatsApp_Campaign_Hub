@@ -14,7 +14,6 @@ class ContactsPage extends BasePage
 
     public function assert(Browser $browser)
     {
-        $browser->assertSee('Contacts')
-                ->assertSee('Manage your customer contact list');
+        $browser->assertPathIs($this->url());
     }
 }

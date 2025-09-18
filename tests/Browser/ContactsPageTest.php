@@ -6,7 +6,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ContactsPage;
 
-final class ExampleTest extends DuskTestCase
+final class ContactsPageTest extends DuskTestCase
 {
     protected function browseContactsPage(callable $callback): void
     {
