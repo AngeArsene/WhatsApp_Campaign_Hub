@@ -6,9 +6,26 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ContactsPage;
 
+/**
+ * Class ContactsPageTest
+ *
+ * Browser tests for the Contacts page.
+ *
+ * Tests include:
+ * - Page headings and descriptions
+ * - Toolbar elements (search input, Import/Export/Add Contact buttons)
+ *
+ * @package Tests\Browser
+ */
 final class ContactsPageTest extends DuskTestCase
 {
-    protected function browseContactsPage(callable $callback): void
+    /**
+     * Helper method to browse the Contacts page and execute assertions.
+     *
+     * @param callable $callback
+     * @return void
+     */
+    private function browseContactsPage(callable $callback): void
     {
         $this->browse(function (Browser $browser) use ($callback) {
             $browser->visit(new ContactsPage());
@@ -17,7 +34,10 @@ final class ContactsPageTest extends DuskTestCase
     }
 
     /**
-     * A basic browser test example.
+     * Test that the contacts page loads successfully and displays
+     * the expected table headings.
+     *
+     * @return void
      */
     public function test_contacts_page_loads_with_expected_headings(): void
     {
@@ -27,6 +47,16 @@ final class ContactsPageTest extends DuskTestCase
         });
     }
 
+    /**
+     * Test that the contacts page toolbar displays all toolbar elements.
+     *
+     * This includes:
+     * - The main toolbar container
+     * - Search input with placeholder
+     * - Action buttons: Import, Export, Add Contact
+     *
+     * @return void
+     */
     public function test_contacts_page_toolbar_elements_are_visible(): void
     {
         $this->browseContactsPage(function (Browser $browser) {
