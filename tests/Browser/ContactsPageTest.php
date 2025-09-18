@@ -73,6 +73,11 @@ final class ContactsPageTest extends DuskTestCase
         });
     }
 
+    /**
+     * Test that the contacts page table displays "No contacts yet" message when there are no contacts.
+     *
+     * @return void
+     */
     public function test_contacts_page_table_displays_no_contacts_yet_when_there_is_non(): void
     {
         $this->browseContactsPage(function (Browser $browser) {
