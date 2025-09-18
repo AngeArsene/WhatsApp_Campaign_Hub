@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Models\Contact;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ContactsPage;
@@ -70,5 +71,31 @@ final class ContactsPageTest extends DuskTestCase
                 ->assertSeeIn('div.flex.space-x-2 > button:nth-of-type(2)', 'Export')
                 ->assertSeeIn('div.flex.space-x-2 > button:nth-of-type(3)', 'Add Contact');
         });
+    }
+
+    public function test_contacts_page_table_displays_no_contacts_yet_when_there_is_non(): void
+    {
+        $this->browseContactsPage(function (Browser $browser) {
+            !(Contact::count() > 0) ?
+                $browser->assertSee('No contacts yet. Add your first contact to get started.') :
+                $browser->assertDontSee('No contacts yet. Add your first contact to get started.');
+        });
+    }
+
+    /**
+     * Test that the contacts page displays the table with expected columns.
+     *
+     * Expected columns:
+     * - Name
+     * - Phone Number
+     * - Email
+     * - Tags
+     * - Actions
+     *
+     * @return void
+     */
+    public function test_contacts_page_table_displays_expected_columns(): void
+    {
+        $this->markTestIncomplete('This test needs to be completed later.');
     }
 }
