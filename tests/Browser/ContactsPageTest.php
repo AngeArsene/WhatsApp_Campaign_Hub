@@ -74,6 +74,27 @@ final class ContactsPageTest extends DuskTestCase
     }
 
     /**
+     * Test that the contacts page displays the table with expected columns.
+     *
+     * Expected columns:
+     * - Name
+     * - Phone Number
+     * - CREATED
+     * - UPDATED
+     *
+     * @return void
+     */
+    public function test_contacts_page_table_displays_expected_columns(): void
+    {
+        $this->browseContactsPage(function (Browser $browser) {
+            $browser->assertSee('NAME')
+                ->assertSee('PHONE NUMBER')
+                ->assertSee('CREATED')
+                ->assertSee('UPDATED');
+        });
+    }
+
+    /**
      * Test that the contacts page table displays "No contacts yet" message when there are no contacts.
      *
      * @return void
@@ -85,22 +106,5 @@ final class ContactsPageTest extends DuskTestCase
                 $browser->assertSee('No contacts yet. Add your first contact to get started.') :
                 $browser->assertDontSee('No contacts yet. Add your first contact to get started.');
         });
-    }
-
-    /**
-     * Test that the contacts page displays the table with expected columns.
-     *
-     * Expected columns:
-     * - Name
-     * - Phone Number
-     * - Email
-     * - Tags
-     * - Actions
-     *
-     * @return void
-     */
-    public function test_contacts_page_table_displays_expected_columns(): void
-    {
-        $this->markTestIncomplete('This test needs to be completed later.');
     }
 }
