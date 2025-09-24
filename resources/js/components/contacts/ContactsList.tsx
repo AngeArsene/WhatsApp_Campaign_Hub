@@ -75,6 +75,7 @@ const ContactsList: React.FC<ContactsListProps> = ({ contacts, onAdd, onImport, 
               Export
             </button>
             <button
+              dusk="add-contact-button"
               onClick={onAdd}
               className="inline-flex items-center px-3 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
             >

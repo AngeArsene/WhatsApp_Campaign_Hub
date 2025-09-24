@@ -66,7 +66,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) 
     <div className="bg-white rounded-lg shadow-sm p-6">
       <h2 className="text-lg font-semibold mb-4">{contact ? 'Edit Contact' : 'Add New Contact'}</h2>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} dusk="add-contact-form">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label htmlFor="first_name" className="block text-sm font-medium text-gray-700 mb-1">

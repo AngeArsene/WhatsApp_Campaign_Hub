@@ -6,6 +6,7 @@ use App\Models\Contact;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ContactsPage;
+use PHPUnit\Framework\Attributes\Depends;
 
 /**
  * Class ContactsPageTest
@@ -105,6 +106,21 @@ final class ContactsPageTest extends DuskTestCase
             !(Contact::count() > 0) ?
                 $browser->assertSee('No contacts yet. Add your first contact to get started.') :
                 $browser->assertDontSee('No contacts yet. Add your first contact to get started.');
+        });
+    }
+
+    /**
+     * Test that the contacts page add contact button show popup form when clicked on.
+     *
+     * @return void
+     */
+    #[Depends('test_contacts_page_toolbar_elements_are_visible')]
+    public function test_contacts_page_add_contact_button_show_popup_form_when_clicked_on(): void
+    {
+        $this->browseContactsPage(function (Browser $browser) {
+            $browser->click("@add-contact-button")
+                ->waitFor("@add-contact-form")
+                ->assertVisible("@add-contact-form");
         });
     }
 }
