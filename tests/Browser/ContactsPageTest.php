@@ -105,10 +105,17 @@ final class ContactsPageTest extends DuskTestCase
      */
     public function test_contacts_page_table_displays_no_contacts_yet_when_there_is_non(): void
     {
-        $this->browseContactsPage(function (Browser $browser) {
-            !(Contact::count() > 0) ?
-                $browser->assertSee('No contacts yet. Add your first contact to get started.') :
-                $browser->assertDontSee('No contacts yet. Add your first contact to get started.');
+        Contact::query()->delete();
+        $no_contacts_yet_text = 'No contacts yet. Add your first contact to get started.';
+
+        $this->browseContactsPage(function (Browser $browser) use ($no_contacts_yet_text) {
+            $browser->assertSee($no_contacts_yet_text);
+        });
+
+        Contact::factory()->create();
+
+        $this->browseContactsPage(function (Browser $browser) use ($no_contacts_yet_text) {
+            $browser->assertDontSee($no_contacts_yet_text);
         });
     }
 
@@ -127,6 +134,11 @@ final class ContactsPageTest extends DuskTestCase
         });
     }
 
+    /**
+     * Test that the contacts page add contact form closes after successful submission.
+     *
+     * @return void
+     */
     #[Depends('test_contacts_page_add_contact_button_show_popup_form_when_clicked_on')]
     public function test_contacts_page_add_contact_form_closes_after_successful_submission(): void
     {
