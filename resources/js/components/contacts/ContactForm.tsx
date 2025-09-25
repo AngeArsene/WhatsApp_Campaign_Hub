@@ -138,6 +138,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) 
           </button>
           <button
             type="submit"
+            dusk="contact-form-submit-button"
             className="px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
           >
             {contact ? 'Update Contact' : 'Add Contact'}

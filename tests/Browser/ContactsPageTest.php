@@ -123,4 +123,19 @@ final class ContactsPageTest extends DuskTestCase
                 ->assertVisible("@add-contact-form");
         });
     }
+
+    #[Depends('test_contacts_page_add_contact_button_show_popup_form_when_clicked_on')]
+    public function test_contacts_page_add_contact_form_closes_after_successful_submission(): void
+    {
+        $this->browseContactsPage(function (Browser $browser) {
+            $browser->click('@add-contact-button')
+                ->waitFor('@add-contact-form')
+                ->assertVisible('@add-contact-form')
+                ->type('first_name', fake()->firstName)
+                ->type('last_name', fake()->lastName)
+                ->type('phone_number', fake()->phoneNumber)
+                ->click('@contact-form-submit-button')
+                ->waitUntilMissing('@add-contact-form');
+        });
+    }
 }
