@@ -7,6 +7,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\ContactsPage;
 use PHPUnit\Framework\Attributes\Depends;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 /**
  * Class ContactsPageTest
@@ -21,6 +22,8 @@ use PHPUnit\Framework\Attributes\Depends;
  */
 final class ContactsPageTest extends DuskTestCase
 {
+    use DatabaseMigrations;
+
     /**
      * Helper method to browse the Contacts page and execute assertions.
      *
