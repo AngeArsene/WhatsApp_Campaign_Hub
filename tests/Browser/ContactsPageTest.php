@@ -133,7 +133,7 @@ final class ContactsPageTest extends DuskTestCase
                 ->assertVisible('@add-contact-form')
                 ->type('first_name', fake()->firstName)
                 ->type('last_name', fake()->lastName)
-                ->type('phone_number', '+2376'.['5', '7', '9'][random_int(0, 2)].str_pad(''.random_int(0, 9999999), 7, '0', STR_PAD_LEFT))
+                ->type('phone_number', fake_cameroon_phone_number())
                 ->click('@contact-form-submit-button')
                 ->waitUntilMissing('@add-contact-form', 10) // wait up to 10s
                 ->assertMissing('@add-contact-form');
