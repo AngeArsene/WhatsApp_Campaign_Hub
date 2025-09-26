@@ -154,4 +154,35 @@ final class ContactsPageTest extends DuskTestCase
                 ->assertMissing('@add-contact-form');
         });
     }
+
+    /**
+     * Test that the contacts page add contact form closes after successful submission.
+     *
+     * @return void
+     */
+    #[Depends('test_contacts_page_add_contact_form_closes_after_successful_submission')]
+    public function test_contacts_page_added_contact_displays_when_add_contact_form_is_filled_and_submitted(): void
+    {
+        $this->browseContactsPage(function (Browser $browser) {
+            $last_name    = fake()->lastName;
+            $first_name   = fake()->firstName;
+            $phone_number = fake_cameroon_phone_number();
+
+            $browser->click('@add-contact-button')
+                ->waitFor('@add-contact-form')
+                ->assertVisible('@add-contact-form')
+
+                ->type('last_name', $last_name)
+                ->type('first_name', $first_name)
+                ->type('phone_number', $phone_number)
+                ->click('@contact-form-submit-button')
+
+                ->waitUntilMissing('@add-contact-form', 10) // wait up to 10s
+                ->assertMissing('@add-contact-form')
+
+                ->assertSee($last_name)
+                ->assertSee($first_name)
+                ->assertSee($phone_number);
+        });
+    }
 }
