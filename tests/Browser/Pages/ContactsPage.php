@@ -27,8 +27,6 @@ class ContactsPage extends BasePage
     /**
      * Assert that the browser is currently on the Contacts page.
      *
-     * Verifies both the URL and the presence of key headings.
-     *
      * @param Browser $browser The Dusk browser instance
      * @return void
      */
