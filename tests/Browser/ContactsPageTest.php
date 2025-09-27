@@ -30,11 +30,50 @@ final class ContactsPageTest extends DuskTestCase
      * @param callable $callback
      * @return void
      */
-    private function browseContactsPage(callable $callback): void
+    protected function browseContactsPage(callable $callback): void
     {
         $this->browse(function (Browser $browser) use ($callback) {
             $browser->visit(new ContactsPage());
             $callback($browser);
+        });
+    }
+
+    /**
+     * Helper method to browse to the Contacts page and open the contact form.
+     *
+     * @param callable $callback
+     * @return void
+     */
+    protected function browseContactsPageAndOpenContactForm(callable $callback): void
+    {
+        $this->browseContactsPage(function (Browser $browser) use ($callback) {
+            $browser->click('@add-contact-button')
+                ->waitFor('@add-contact-form');
+
+            $callback($browser);
+        });
+    }
+
+    /**
+     * Helper method to browse to the Contacts page and open the contact form.
+     *
+     * @param callable $callback
+     * @return void
+     */
+    protected function browseContactsPageAndFillContactForm(callable $callback): void
+    {
+        $this->browseContactsPageAndOpenContactForm(function (Browser $browser) use ($callback) {
+            $last_name    = fake()->lastName;
+            $first_name   = fake()->firstName;
+            $phone_number = fake_cameroon_phone_number();
+
+            $browser->assertVisible('@add-contact-form')
+                ->type('last_name', $last_name)
+                ->type('first_name', $first_name)
+                ->type('phone_number', $phone_number)
+                ->click('@contact-form-submit-button');
+
+            $callback($browser, $first_name, $last_name, $phone_number);
         });
     }
 
@@ -127,10 +166,8 @@ final class ContactsPageTest extends DuskTestCase
     #[Depends('test_contacts_page_toolbar_elements_are_visible')]
     public function test_contacts_page_add_contact_button_show_popup_form_when_clicked_on(): void
     {
-        $this->browseContactsPage(function (Browser $browser) {
-            $browser->click("@add-contact-button")
-                ->waitFor("@add-contact-form")
-                ->assertVisible("@add-contact-form");
+        $this->browseContactsPageAndOpenContactForm(function (Browser $browser) {
+            $browser->assertVisible("@add-contact-form");
         });
     }
 
@@ -142,15 +179,8 @@ final class ContactsPageTest extends DuskTestCase
     #[Depends('test_contacts_page_add_contact_button_show_popup_form_when_clicked_on')]
     public function test_contacts_page_add_contact_form_closes_after_successful_submission(): void
     {
-        $this->browseContactsPage(function (Browser $browser) {
-            $browser->click('@add-contact-button')
-                ->waitFor('@add-contact-form')
-                ->assertVisible('@add-contact-form')
-                ->type('first_name', fake()->firstName)
-                ->type('last_name', fake()->lastName)
-                ->type('phone_number', fake_cameroon_phone_number())
-                ->click('@contact-form-submit-button')
-                ->waitUntilMissing('@add-contact-form', 10) // wait up to 10s
+        $this->browseContactsPageAndFillContactForm(function (Browser $browser) {
+            $browser->waitUntilMissing('@add-contact-form', 10) // wait up to 10s
                 ->assertMissing('@add-contact-form');
         });
     }
@@ -163,23 +193,14 @@ final class ContactsPageTest extends DuskTestCase
     #[Depends('test_contacts_page_add_contact_form_closes_after_successful_submission')]
     public function test_contacts_page_added_contact_displays_when_add_contact_form_is_filled_and_submitted(): void
     {
-        $this->browseContactsPage(function (Browser $browser) {
-            $last_name    = fake()->lastName;
-            $first_name   = fake()->firstName;
-            $phone_number = fake_cameroon_phone_number();
-
-            $browser->click('@add-contact-button')
-                ->waitFor('@add-contact-form')
-                ->assertVisible('@add-contact-form')
-
-                ->type('last_name', $last_name)
-                ->type('first_name', $first_name)
-                ->type('phone_number', $phone_number)
-                ->click('@contact-form-submit-button')
-
-                ->waitUntilMissing('@add-contact-form', 10) // wait up to 10s
+        $this->browseContactsPageAndFillContactForm(function (
+            Browser $browser,
+            string $first_name,
+            string $last_name,
+            string $phone_number
+        ) {
+            $browser->waitUntilMissing('@add-contact-form', 10) // wait up to 10s
                 ->assertMissing('@add-contact-form')
-
                 ->assertSee($last_name)
                 ->assertSee($first_name)
                 ->assertSee($phone_number);
