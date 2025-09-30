@@ -55,7 +55,7 @@ final class ContactsPageTest extends DuskTestCase
     }
 
     /**
-     * Helper method to browse to the Contacts page and open the contact form.
+     * Helper method to browse to the Contacts page and open the contact form fill the form and submit.
      *
      * @param callable $callback
      * @return void
@@ -195,15 +195,32 @@ final class ContactsPageTest extends DuskTestCase
     {
         $this->browseContactsPageAndFillContactForm(function (
             Browser $browser,
-            string $first_name,
-            string $last_name,
-            string $phone_number
+            string  $first_name,
+            string  $last_name,
+            string  $phone_number
         ) {
             $browser->waitUntilMissing('@add-contact-form', 10) // wait up to 10s
                 ->assertMissing('@add-contact-form')
                 ->assertSee($last_name)
                 ->assertSee($first_name)
                 ->assertSee($phone_number);
+        });
+    }
+
+    /**
+     * Test that the contacts page add contact form closes after successful submission.
+     *
+     * @return void
+     */
+    public function test_contacts_page_delete_contact_button_shows_alert_on_click(): void
+    {
+        Contact::factory()->create();
+
+        $this->browseContactsPage(function (Browser $browser) {
+            $browser->assertSee('@delete-contact-button')
+                ->click('@delete-contact-button')
+                ->waitForDialog()
+                ->assertDialogOpened("Are you sure you want to delete this contact?");
         });
     }
 }
