@@ -154,10 +154,11 @@ const ContactsList: React.FC<ContactsListProps> = ({ contacts, onAdd, onImport, 
                       <Edit size={16} />
                     </button>
                     <button
+                      dusk="delete-contact-button"
                       onClick={() => onDelete(contact.id)}
                       className="text-gray-500 hover:text-red-600"
                     >
-                      <Trash2 dusk="delete-contact-button" size={16} />
+                      <Trash2 size={16} />
                     </button>
                   </div>
                 </td>
