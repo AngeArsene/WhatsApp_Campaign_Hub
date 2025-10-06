@@ -217,7 +217,7 @@ final class ContactsPageTest extends DuskTestCase
         Contact::factory()->create();
 
         $this->browseContactsPage(function (Browser $browser) {
-            $browser->waitFor('@delete-contact-button', 10)
+            $browser->waitFor('@delete-contact-button')
                 ->click('@delete-contact-button')
                 ->waitForDialog()
                 ->assertDialogOpened("Are you sure you want to delete this contact?");
